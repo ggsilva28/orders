@@ -1,0 +1,44 @@
+.orders-wrapper {
+  width: 100%;
+  max-width: 1280px;
+  margin: 64px auto;
+
+  .title {
+    font-size: 48px;
+    font-weight: bold;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  .mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  td,
+  th {
+    width: 25%;
+  }
+
+  .filters-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+
+    .input-search{
+      flex: 3;
+    }
+
+    .select-status{
+      flex: 1;
+    }
+  }
+
+  .empty-table{
+    padding: 32px;
+  }
+}

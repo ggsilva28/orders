@@ -1,0 +1,94 @@
+<div class="orders-wrapper">
+  <h1 class="title">Orders</h1>
+
+  <div class="filters-wrapper">
+    <mat-form-field class="input-search">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="updateSearch($event)" placeholder="Ex. Mia" #input>
+    </mat-form-field>
+
+    <mat-form-field class="select-status">
+      <mat-label>Status</mat-label>
+      <mat-select [(value)]="selectedStatus" (valueChange)="applyFilter()">
+        <mat-option [value]="0"> Todos </mat-option>
+        <mat-option [value]="EStatus.CANCELLED"> {{ EStatus.CANCELLED | status }} </mat-option>
+        <mat-option [value]="EStatus.PENDING"> {{ EStatus.PENDING | status }} </mat-option>
+        <mat-option [value]="EStatus.IN_PRODUCTION"> {{ EStatus.IN_PRODUCTION | status }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="mat-elevation-z1">
+    <table mat-table [dataSource]="orders" matSort>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+        <td mat-cell *matCellDef="let row"> {{row.date | date}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
+        <td mat-cell *matCellDef="let row"> {{row.customer}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="address1">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Address1 </th>
+        <td mat-cell *matCellDef="let row"> {{row.address1}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> City </th>
+        <td mat-cell *matCellDef="let row"> {{row.city}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="postcode">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Postcode </th>
+        <td mat-cell *matCellDef="let row"> {{row.postcode}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
+        <td mat-cell *matCellDef="let row"> {{row.country}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+        <td mat-cell *matCellDef="let row"> {{row.amount}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let row"> {{row.status | status}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="last_modified">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Modified </th>
+        <td mat-cell *matCellDef="let row"> {{row.last_modified| date}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+        <td mat-cell *matCellDef="let row">
+          @if(row.status !== EStatus.CANCELLED) {
+          <button mat-button (click)="cancelOrder(row.id)"> Cancelar </button>
+          }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell empty-table" colspan="4">No data matching the filter <strong>"{{input.value}}"</strong></td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" aria-label="Select page of users"></mat-paginator>
+  </div>
+
+</div>
